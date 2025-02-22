@@ -1,73 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Smart Bite</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your custom CSS file -->
-    <script defer src="script.js"></script> <!-- Link to your custom JavaScript file -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Bite</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <!-- Header Section -->
-    <header>
-        <div class="container">
-            <h1>Smart Bite</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <header>
+    <h1>Welcome to Smart Bite!</h1>
+    <nav>
+      <ul>
+        <li><a href="#bmiSection">BMI Calculator</a></li>
+        <li><a href="#proteinSection">Protein Tracker</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Main Content Section -->
-    <main>
-        <section id="home" class="hero">
-            <h2>Welcome to Smart Bite</h2>
-            <p>Your go-to platform for all things food and tech! Revolutionizing how we experience food in the digital age.</p>
-        </section>
+  <section id="bmiSection">
+    <h2>BMI Calculator</h2>
+    <form>
+      <label for="weight">Weight (kg):</label>
+      <input type="number" id="weight" name="weight" required>
+      <label for="height">Height (m):</label>
+      <input type="number" id="height" name="height" required>
+      <button type="button" onclick="calculateBMI()">Calculate BMI</button>
+    </form>
+    <p id="bmiResult"></p>
+  </section>
 
-        <section id="about">
-            <h2>About Us</h2>
-            <p>At Smart Bite, we aim to merge technology with food to create smarter dining experiences. Whether it's through personalized meal plans or food tracking, we make eating better easier.</p>
-        </section>
+  <section id="proteinSection">
+    <h2>Protein Intake Tracker</h2>
+    <form>
+      <label for="food">Food:</label>
+      <input type="text" id="food" name="food" required>
+      <label for="quantity">Quantity (servings):</label>
+      <input type="number" id="quantity" name="quantity" required>
+      <button type="button" onclick="addFood()">Add Food</button>
+    </form>
+    <ul id="foodList"></ul>
+    <p id="totalProtein">Total Protein: 0g</p>
+    <p id="proteinFeedback"></p>
+  </section>
 
-        <section id="services">
-            <h2>Our Services</h2>
-            <ul>
-                <li>Smart Meal Planning</li>
-                <li>Food Tracking App</li>
-                <li>AI-Powered Recipes</li>
-            </ul>
-        </section>
-
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <p>Have questions or want to collaborate? Reach out to us!</p>
-            <form action="submit_form.php" method="POST">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-    </main>
-
-    <!-- Footer Section -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Smart Bite. All Rights Reserved.</p>
-        </div>
-    </footer>
+  <script src="app.js"></script>
+  <script src="script.js"></script>
 </body>
-
 </html>
