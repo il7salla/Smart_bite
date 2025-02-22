@@ -1,0 +1,70 @@
+/* Smart Bite - Style */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+h1 {
+  color: #3f51b5;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 80%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+button {
+  background-color: #2196f3;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1976d2;
+}
+
+#result {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #e3f2fd;
+  border: 1px solid #bbdefb;
+  color: #0d47a1;
+}
+
+@media (max-width: 500px) {
+  .container {
+    width: 95%;
+  }
+}
