@@ -4,94 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Bite</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        h1, h2, h3 {
-            text-align: center;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-        .history-img {
-            margin-top: 5px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 5px 0;
-            background: #f9f9f9;
-            padding: 8px;
-            border-radius: 5px;
-        }
-        .feedback {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Smart Bite</h1>
+    <div class="sidebar">
+        <h2>Smart Bite</h2>
+        <button onclick="showSection('bmiSection')">BMI Calculator</button>
+        <button onclick="showSection('proteinSection')">Protein Tracker</button>
+        <button onclick="showSection('mealLogSection')">Meal Log</button>
+    </div>
 
-        <!-- BMI Calculator -->
-        <h2>BMI Calculator</h2>
-        <input type="number" id="weight" placeholder="Enter weight in kg">
-        <input type="number" id="height" placeholder="Enter height in meters">
-        <button onclick="calculateBMI()">Calculate BMI</button>
-        <p id="bmiResult"></p>
+    <div class="main-content">
 
-        <!-- Protein Tracker -->
-        <h2>Protein Tracker</h2>
-        <input type="text" id="food" placeholder="Enter food name">
-        <input type="number" id="quantity" placeholder="Quantity (servings)">
-        <button onclick="addFood()">Add Food</button>
-        <h3 id="totalProtein">Total Protein: 0g</h3>
-        <ul id="foodList"></ul>
-        <p id="proteinFeedback" class="feedback"></p>
+        <!-- BMI Calculator Section -->
+        <div id="bmiSection" class="section active">
+            <h2>BMI Calculator</h2>
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight">
+            <label for="height">Height (m):</label>
+            <input type="number" id="height">
+            <button onclick="calculateBMI()">Calculate BMI</button>
+            <p id="bmiResult"></p>
+        </div>
 
-        <!-- Photo Upload -->
-        <h2>Upload Meal Photo</h2>
-        <input type="file" id="photoUpload" accept="image/*">
-        <h3>Latest Upload:</h3>
-        <img id="latestPhoto" alt="Latest Upload">
+        <!-- Protein Tracker Section -->
+        <div id="proteinSection" class="section">
+            <h2>Protein Tracker</h2>
+            <label for="food">Food:</label>
+            <input type="text" id="food">
+            <label for="quantity">Quantity (servings):</label>
+            <input type="number" id="quantity">
+            <button onclick="addFood()">Add Food</button>
+            <h3 id="totalProtein">Total Protein: 0g</h3>
+            <ul id="foodList"></ul>
+            <p id="proteinFeedback"></p>
+        </div>
 
-        <!-- Progress History -->
-        <h3>Progress History:</h3>
-        <div id="photoHistory"></div>
+        <!-- Meal Log Section -->
+        <div id="mealLogSection" class="section">
+            <h2>Meal Log</h2>
+            <input type="file" id="photoUpload" accept="image/*">
+            <h3>Latest Upload:</h3>
+            <img id="latestPhoto" alt="Latest Upload">
+            <h3>Meal History:</h3>
+            <div id="photoHistory"></div>
+        </div>
 
-        <button id="submitButton">Submit</button>
     </div>
 
     <script src="app.js"></script>
