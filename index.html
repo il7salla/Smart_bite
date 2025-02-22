@@ -1,49 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Bite</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bite</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .history-img {
+            margin-top: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            background: #f9f9f9;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Welcome to Smart Bite!</h1>
-    <nav>
-      <ul>
-        <li><a href="#bmiSection">BMI Calculator</a></li>
-        <li><a href="#proteinSection">Protein Tracker</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <section id="bmiSection">
-    <h2>BMI Calculator</h2>
-    <form>
-      <label for="weight">Weight (kg):</label>
-      <input type="number" id="weight" name="weight" required>
-      <label for="height">Height (m):</label>
-      <input type="number" id="height" name="height" required>
-      <button type="button" onclick="calculateBMI()">Calculate BMI</button>
-    </form>
-    <p id="bmiResult"></p>
-  </section>
+    <div class="container">
+        <h1>Smart Bite</h1>
 
-  <section id="proteinSection">
-    <h2>Protein Intake Tracker</h2>
-    <form>
-      <label for="food">Food:</label>
-      <input type="text" id="food" name="food" required>
-      <label for="quantity">Quantity (servings):</label>
-      <input type="number" id="quantity" name="quantity" required>
-      <button type="button" onclick="addFood()">Add Food</button>
-    </form>
-    <ul id="foodList"></ul>
-    <p id="totalProtein">Total Protein: 0g</p>
-    <p id="proteinFeedback"></p>
-  </section>
+        <!-- BMI Calculator -->
+        <h2>BMI Calculator</h2>
+        <input type="number" id="weight" placeholder="Enter weight in kg">
+        <input type="number" id="height" placeholder="Enter height in meters">
+        <button onclick="calculateBMI()">Calculate BMI</button>
+        <p id="bmiResult"></p>
 
-  <script src="app.js"></script>
-  <script src="script.js"></script>
+        <!-- Protein Tracker -->
+        <h2>Protein Tracker</h2>
+        <input type="text" id="food" placeholder="Enter food name">
+        <input type="number" id="quantity" placeholder="Quantity (servings)">
+        <button onclick="addFood()">Add Food</button>
+        <h3 id="totalProtein">Total Protein: 0g</h3>
+        <ul id="foodList"></ul>
+        <p id="proteinFeedback" class="feedback"></p>
+
+        <!-- Photo Upload -->
+        <h2>Upload Meal Photo</h2>
+        <input type="file" id="photoUpload" accept="image/*">
+        <h3>Latest Upload:</h3>
+        <img id="latestPhoto" alt="Latest Upload">
+
+        <!-- Progress History -->
+        <h3>Progress History:</h3>
+        <div id="photoHistory"></div>
+
+        <button id="submitButton">Submit</button>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
