@@ -1,63 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Bite</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Smart Bite</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your custom CSS file -->
+    <script defer src="script.js"></script> <!-- Link to your custom JavaScript file -->
 </head>
+
 <body>
-  <div class="container">
-    <h1>Smart Bite - Weight Manager</h1>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Smart Bite</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <input type="text" id="name" placeholder="Name">
-    <input type="number" id="age" placeholder="Age">
-    <input type="number" id="weight" placeholder="Weight (kg)">
-    <input type="number" id="height" placeholder="Height (cm)">
-    <button onclick="submitUser()">Check BMI</button>
+    <!-- Main Content Section -->
+    <main>
+        <section id="home" class="hero">
+            <h2>Welcome to Smart Bite</h2>
+            <p>Your go-to platform for all things food and tech! Revolutionizing how we experience food in the digital age.</p>
+        </section>
 
-    <div id="result"></div>
-  </div>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>At Smart Bite, we aim to merge technology with food to create smarter dining experiences. Whether it's through personalized meal plans or food tracking, we make eating better easier.</p>
+        </section>
 
-  <script>
-    function calculateBMI(weight, height) {
-      return (weight / ((height / 100) ** 2)).toFixed(1);
-    }
+        <section id="services">
+            <h2>Our Services</h2>
+            <ul>
+                <li>Smart Meal Planning</li>
+                <li>Food Tracking App</li>
+                <li>AI-Powered Recipes</li>
+            </ul>
+        </section>
 
-    function getWeightStatus(bmi) {
-      if (bmi < 18.5) return 'Underweight';
-      if (bmi >= 18.5 && bmi < 24.9) return 'Normal weight';
-      if (bmi >= 25 && bmi < 29.9) return 'Overweight';
-      return 'Obese';
-    }
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Have questions or want to collaborate? Reach out to us!</p>
+            <form action="submit_form.php" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
 
-    function suggestChanges(bmi) {
-      if (bmi < 18.5) return 'Increase calorie intake with healthy foods.';
-      if (bmi >= 18.5 && bmi < 24.9) return 'Maintain your current diet and exercise routine.';
-      if (bmi >= 25) return 'Reduce calorie intake and increase physical activity.';
-    }
-
-    function submitUser() {
-      const name = document.getElementById('name').value;
-      const age = document.getElementById('age').value;
-      const weight = document.getElementById('weight').value;
-      const height = document.getElementById('height').value;
-
-      if (!name || !age || !weight || !height) {
-        document.getElementById('result').innerText = 'Please fill out all fields.';
-        return;
-      }
-
-      const bmi = calculateBMI(weight, height);
-      const status = getWeightStatus(bmi);
-      const suggestion = suggestChanges(bmi);
-
-      document.getElementById('result').innerHTML = `
-        <h3>${name}'s Results:</h3>
-        <p>BMI: ${bmi} (${status})</p>
-        <p>Suggestion: ${suggestion}</p>
-      `;
-    }
-  </script>
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Smart Bite. All Rights Reserved.</p>
+        </div>
+    </footer>
 </body>
+
 </html>
