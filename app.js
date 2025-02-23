@@ -7,14 +7,41 @@ const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [totalProtein, setTotalProtein] = useState(parseFloat(localStorage.getItem("totalProtein")) || 0);
   const [foodList, setFoodList] = useState(JSON.parse(localStorage.getItem("foodList")) || []);
-  const [totalCalories, setTotalCalories] = useState(parseFloat(localStorage.getItem("totalCalories")) || 0);
-  const [calorieList, setCalorieList] = useState(JSON.parse(localStorage.getItem("calorieList")) || []);
   const proteinChartRef = useRef(null);
   let proteinChart;
 
   useEffect(() => {
     initProteinChart();
+    window.addEventListener('touchstart', handleTouchStart, false);
+    window.addEventListener('touchmove', handleTouchMove, false);
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
   }, []);
+
+  const [xDown, setXDown] = useState(null);
+
+  const handleTouchStart = (evt) => {
+    const firstTouch = evt.touches[0];
+    setXDown(firstTouch.clientX);
+  };
+
+  const handleTouchMove = (evt) => {
+    if (!xDown) return;
+
+    let xUp = evt.touches[0].clientX;
+    let xDiff = xDown - xUp;
+
+    if (xDiff > 0) {
+      setIsSidebarOpen(false); // Swipe left to close
+    } else {
+      setIsSidebarOpen(true); // Swipe right to open
+    }
+
+    setXDown(null);
+  };
 
   const initProteinChart = () => {
     const ctx = proteinChartRef.current.getContext("2d");
