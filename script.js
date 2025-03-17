@@ -1,217 +1,139 @@
-let currentView = "bmi-calculator";
-
-// Food data for protein and calorie tracking
-let proteinData = {
-  labels: [
-    "Chicken", "Rice", "Eggs", "Tofu", "Cheese", "Milk", "Beef", "Fish", "Lentils", "Yogurt",
-    "Almond", "Peanuts", "Chickpeas", "Burger", "Pizza", "Hotdog", "Fried Chicken", "Bacon",
-    "Sausage", "Ice Cream", "Chocolate", "Cheetos", "Doritos", "Pringles", "Fries", "Naan",
-    "Samosa", "Falafel", "Hummus", "Curry", "Sushi", "Dumplings", "Pasta", "Tortilla", 
-    "Instant Noodles", "Ramen", "Spaghetti", "Mac and Cheese", "Coke", "Orange Juice", 
-    "Milkshake", "Protein Shake", "Energy Drink", "Shawarma", "Kebab", "Biryani", "Miso Soup", 
-    "Pad Thai", "Salad", "Quinoa", "Avocado Toast", "Granola", "Oatmeal", "Fruit Bowl", 
-    "Green Smoothie", "Matcha Latte", "Bubble Tea"
-  ],
-  datasets: [{
-    label: "Protein (g)",
-    data: [
-      25, 4, 6, 10, 7, 8, 20, 22, 9, 8, 6, 8, 9, 26, 12, 22, 21, 15, 15, 2, 2, 1, 1, 3, 
-      5, 10, 5, 7, 10, 8, 12, 5, 5, 10, 8, 0, 0, 8, 20, 15, 15, 13, 7, 6, 2, 10, 5, 10, 6
-    ],
-    backgroundColor: "rgba(255, 99, 132, 0.2)",
-    borderColor: "rgba(255, 99, 132, 1)",
-    borderWidth: 1
-  }]
-};
-
-let calorieData = {
-  labels: [
-    "Chicken", "Rice", "Eggs", "Tofu", "Cheese", "Milk", "Beef", "Fish", "Lentils", "Yogurt",
-    "Almond", "Peanuts", "Chickpeas", "Burger", "Pizza", "Hotdog", "Fried Chicken", "Bacon",
-    "Sausage", "Ice Cream", "Chocolate", "Cheetos", "Doritos", "Pringles", "Fries", "Naan",
-    "Samosa", "Falafel", "Hummus", "Curry", "Sushi", "Dumplings", "Pasta", "Tortilla", 
-    "Instant Noodles", "Ramen", "Spaghetti", "Mac and Cheese", "Coke", "Orange Juice", 
-    "Milkshake", "Protein Shake", "Energy Drink", "Shawarma", "Kebab", "Biryani", "Miso Soup", 
-    "Pad Thai", "Salad", "Quinoa", "Avocado Toast", "Granola", "Oatmeal", "Fruit Bowl", 
-    "Green Smoothie", "Matcha Latte", "Bubble Tea"
-  ],
-  datasets: [{
-    label: "Calories",
-    data: [
-      200, 130, 70, 100, 120, 150, 250, 180, 120, 90, 160, 180, 150, 350, 300, 250, 350, 400,
-      250, 200, 250, 160, 180, 170, 230, 200, 300, 250, 160, 180, 250, 350, 100, 120, 200, 230,
-      150, 100, 70, 160, 220, 150, 200, 270, 300, 300, 400, 120, 150, 100, 160, 200
-    ],
-    backgroundColor: "rgba(54, 162, 235, 0.2)",
-    borderColor: "rgba(54, 162, 235, 1)",
-    borderWidth: 1
-  }]
-};
-
-const bmiCalculator = document.getElementById("bmi-calculator");
-const proteinTracker = document.getElementById("protein-tracker");
-const calorieTracker = document.getElementById("calorie-tracker");
-const mealLog = document.getElementById("meal-log");
-const profileSection = document.getElementById("profile");
-const proteinChart = document.getElementById("proteinChart").getContext("2d");
-const calorieChart = document.getElementById("calorieChart").getContext("2d");
-
-let proteinChartInstance = new Chart(proteinChart, {
-  type: "bar",
-  data: proteinData,
-  options: {
-    responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
-
-let calorieChartInstance = new Chart(calorieChart, {
-  type: "bar",
-  data: calorieData,
-  options: {
-    responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
-
-// Show the section based on button clicked
-document.getElementById("bmi-btn").addEventListener("click", () => {
-  switchView("bmi-calculator");
-});
-
-document.getElementById("protein-btn").addEventListener("click", () => {
-  switchView("protein-tracker");
-});
-
-document.getElementById("calories-btn").addEventListener("click", () => {
-  switchView("calorie-tracker");
-});
-
-document.getElementById("meal-log-btn").addEventListener("click", () => {
-  switchView("meal-log");
-});
-
-document.getElementById("profile-btn").addEventListener("click", () => {
-  switchView("profile");
-});
-
-function switchView(view) {
-  document.getElementById(currentView).style.display = "none";
-  document.getElementById(view).style.display = "block";
-  currentView = view;
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F9F6F0; /* Soft beige */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-function calculateBMI() {
-  let weight = parseFloat(document.getElementById("weight").value);
-  let height = parseFloat(document.getElementById("height").value) / 100; // Convert cm to m
-
-  if (isNaN(weight) || isNaN(height)) {
-    alert("Please enter valid values for weight and height.");
-    return;
-  }
-
-  let bmi = weight / (height * height);
-  let result = "";
-
-  if (bmi < 18.5) {
-    result = `Underweight (BMI: ${bmi.toFixed(2)})`;
-  } else if (bmi < 24.9) {
-    result = `Normal weight (BMI: ${bmi.toFixed(2)})`;
-  } else if (bmi < 29.9) {
-    result = `Overweight (BMI: ${bmi.toFixed(2)})`;
-  } else {
-    result = `Obesity (BMI: ${bmi.toFixed(2)})`;
-  }
-
-  document.getElementById("bmi-result").innerText = result;
+/* Sidebar Styling */
+#sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #EED0C6;
+    transition: 0.3s;
+    padding-top: 50px;
+    z-index: 2;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-function addProtein() {
-  let foodName = document.getElementById("food-name").value;
-  let proteinAmount = parseFloat(document.getElementById("protein-amount").value);
-  let caloriesAmount = parseFloat(document.getElementById("calories-amount").value);
-  let quantity = parseInt(document.getElementById("quantity").value);
-
-  if (!foodName || isNaN(proteinAmount) || isNaN(caloriesAmount) || isNaN(quantity)) {
-    alert("Please fill all fields.");
-    return;
-  }
-
-  // Add the food and its quantity to the chart data
-  proteinData.labels.push(foodName);
-  proteinData.datasets[0].data.push(proteinAmount * quantity);
-  calorieData.labels.push(foodName);
-  calorieData.datasets[0].data.push(caloriesAmount * quantity);
-
-  proteinChartInstance.update();
-  calorieChartInstance.update();
+#sidebar a {
+    padding: 16px;
+    text-decoration: none;
+    font-size: 1.2em;
+    color: #333;
+    display: block;
+    transition: 0.3s;
 }
 
-function addCalories() {
-  let foodName = document.getElementById("food-name-calories").value;
-  let caloriesValue = parseFloat(document.getElementById("calories-value").value);
-  let quantity = parseInt(document.getElementById("quantity-calories").value);
-
-  if (!foodName || isNaN(caloriesValue) || isNaN(quantity)) {
-    alert("Please fill all fields.");
-    return;
-  }
-
-  // Add the food and its quantity to the calorie data
-  calorieData.labels.push(foodName);
-  calorieData.datasets[0].data.push(caloriesValue * quantity);
-
-  calorieChartInstance.update();
+#sidebar a:hover {
+    background-color: #D1B3A1;
+    color: white;
 }
 
-function logMeal() {
-  let file = document.getElementById("meal-photo").files[0];
-  if (file) {
-    let reader = new FileReader();
-    reader.onload = function(event) {
-      let imgElement = document.createElement("img");
-      imgElement.src = event.target.result;
-
-      let li = document.createElement("li");
-      li.appendChild(imgElement);
-      document.getElementById("meal-list").appendChild(li);
-    };
-    reader.readAsDataURL(file);
-  }
+#sidebar .close-btn {
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+    padding: 20px;
 }
 
-function saveProfile() {
-  let name = document.getElementById("profile-name").value;
-  let weight = document.getElementById("profile-weight").value;
-  let height = document.getElementById("profile-height").value;
-
-  if (!name || !weight || !height) {
-    alert("Please fill all profile fields.");
-    return;
-  }
-
-  // Save profile data to localStorage
-  localStorage.setItem("profile", JSON.stringify({ name, weight, height }));
-
-  document.getElementById("profile-info").innerText = `Name: ${name}, Weight: ${weight}kg, Height: ${height}cm`;
+/* Button Animation */
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background-color: #EED0C6;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-function loadProfile() {
-  const profile = JSON.parse(localStorage.getItem("profile"));
-  if (profile) {
-    document.getElementById("profile-name").value = profile.name;
-    document.getElementById("profile-weight").value = profile.weight;
-    document.getElementById("profile-height").value = profile.height;
-    document.getElementById("profile-info").innerText = `Name: ${profile.name}, Weight: ${profile.weight}kg, Height: ${profile.height}cm`;
-  }
+button:hover {
+    background-color: #D1B3A1;
+    transform: scale(1.1); /* Button click animation */
 }
 
-window.onload = loadProfile;
+/* Main Content */
+#content {
+    margin-left: 0;
+    transition: margin-left 0.3s;
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Section Styles */
+section {
+    display: none;
+    margin-top: 20px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+section.active {
+    display: block;
+}
+
+/* Profile Section */
+#profile-section input {
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid #EED0C6;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 80%;
+}
+
+#profile-section button {
+    width: 50%;
+}
+
+/* BMI Calculator Section */
+#bmi-calculator input {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #EED0C6;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 60%;
+}
+
+#bmi-calculator button {
+    margin-top: 10px;
+    background-color: #EED0C6;
+}
+
+/* Meal Log Section */
+#meal-log input {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #EED0C6;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 80%;
+}
+
+#meal-log button {
+    margin-top: 10px;
+    background-color: #EED0C6;
+}
+
+/* Footer */
+footer {
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.9em;
+    color: #888;
+}
