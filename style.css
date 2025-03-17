@@ -1,71 +1,53 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #EED0C6;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+  margin: 0;
 }
 
-header {
-    position: relative;
-    text-align: center;
-    background-color: #f0f4f8;
-    padding: 20px;
-}
-
-.logo {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 100px;
-}
-
-.sidebar {
-    background-color: #f7d9d0;
-    padding: 20px;
-    display: flex;
-    gap: 10px;
+#sidebar {
+  background-color: #EED0C6;
+  width: 200px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #EED0C6;
+  border: 1px solid #000;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+  background-color: #D8B8A8;
 }
 
-.content {
-    padding: 20px;
+.section {
+  display: none;
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-.hidden {
-    display: none;
+#proteinChart, #calorieChart {
+  width: 100%;
+  height: 300px;
 }
 
-#mealList li {
-    list-style: none;
-    margin: 5px 0;
+input[type="number"], input[type="text"] {
+  padding: 5px;
+  margin: 10px;
 }
 
-.camera-section {
-    margin-top: 10px;
+#meal-list {
+  list-style-type: none;
+  padding: 0;
 }
 
-#camera {
-    width: 100%;
-    max-width: 300px;
-    border: 2px solid #4CAF50;
-    border-radius: 5px;
-}
-
-#canvas {
-    display: none;
+#meal-list img {
+  max-width: 100px;
+  margin-right: 10px;
 }
