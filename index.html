@@ -18,7 +18,7 @@
     </div>
 
     <!-- Open Sidebar Button -->
-    <button onclick="openNav()">☰ Open Sidebar</button>
+    <button class="open-btn" onclick="openNav()">☰ Open Sidebar</button>
 
     <!-- Main Content -->
     <div id="content">
@@ -27,14 +27,14 @@
             <input type="text" id="profile-name" placeholder="Enter your name">
             <input type="number" id="profile-weight" placeholder="Enter your weight (kg)">
             <input type="number" id="profile-height" placeholder="Enter your height (cm)">
-            <button onclick="saveProfile()">Save Profile</button>
+            <button class="save-btn" onclick="saveProfile()">Save Profile</button>
         </section>
 
         <section id="bmi-calculator">
             <h2>BMI Calculator</h2>
             <input type="number" id="weight" placeholder="Enter your weight (kg)">
             <input type="number" id="height" placeholder="Enter your height (cm)">
-            <button onclick="calculateBMI()">Calculate BMI</button>
+            <button class="calculate-btn" onclick="calculateBMI()">Calculate BMI</button>
             <p id="bmi-result"></p>
         </section>
 
@@ -47,7 +47,7 @@
                 </select>
                 <label for="quantity">Enter Quantity (grams):</label>
                 <input type="number" id="quantity" placeholder="Enter Quantity in grams">
-                <button onclick="addProteinTracker()">Add to Tracker</button>
+                <button class="tracker-btn" onclick="addProteinTracker()">Add to Tracker</button>
             </div>
             <ul id="protein-log"></ul>
         </section>
@@ -61,7 +61,7 @@
                 </select>
                 <label for="quantity-calorie">Enter Quantity (grams):</label>
                 <input type="number" id="quantity-calorie" placeholder="Enter Quantity in grams">
-                <button onclick="addCalorieTracker()">Add to Tracker</button>
+                <button class="tracker-btn" onclick="addCalorieTracker()">Add to Tracker</button>
             </div>
             <ul id="calorie-log"></ul>
         </section>
@@ -69,7 +69,7 @@
         <section id="meal-log">
             <h2>Meal Log</h2>
             <input type="file" id="meal-photo">
-            <button onclick="logMeal()">Add Meal</button>
+            <button class="log-btn" onclick="logMeal()">Add Meal</button>
             <ul id="meal-list"></ul>
         </section>
     </div>
