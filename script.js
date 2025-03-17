@@ -40,10 +40,24 @@ function calculateBMI() {
     }
 }
 
+// Handle food selection
+function handleFoodSelect(type) {
+    const foodSelect = document.getElementById(`food-select${type === 'protein' ? '' : '-calorie'}`);
+    const foodInput = document.getElementById(`food-input${type === 'protein' ? '' : '-calorie'}`);
+    if (foodSelect.value === "") {
+        foodInput.style.display = "inline-block";
+    } else {
+        foodInput.style.display = "none";
+    }
+}
+
 // Add protein tracker
 function addProteinTracker() {
-    const food = document.getElementById('food-select').value;
-    const quantity = document.getElementById('quantity').value;
+    let food = document.getElementById('food-select').value;
+    if (!food) {
+        food = document.getElementById('food-input').value;
+    }
+    const quantity = document.getElementById('protein-quantity').value;
     if (food && quantity) {
         const listItem = document.createElement('li');
         listItem.textContent = `${food} - ${quantity} grams`;
@@ -55,8 +69,11 @@ function addProteinTracker() {
 
 // Add calorie tracker
 function addCalorieTracker() {
-    const food = document.getElementById('food-select-calorie').value;
-    const quantity = document.getElementById('quantity-calorie').value;
+    let food = document.getElementById('food-select-calorie').value;
+    if (!food) {
+        food = document.getElementById('food-input-calorie').value;
+    }
+    const quantity = document.getElementById('calorie-quantity').value;
     if (food && quantity) {
         const listItem = document.createElement('li');
         listItem.textContent = `${food} - ${quantity} grams`;
