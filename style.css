@@ -160,3 +160,11 @@ select {
     border-radius: 8px;
     border: 2px solid #EED0C6;
 }
+
+input[type="text"] {
+    padding: 10px;
+    margin: 10px;
+    width: 70%;
+    border-radius: 8px;
+    border: 2px solid #EED0C6;
+}
