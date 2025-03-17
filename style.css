@@ -1,53 +1,177 @@
+/* Global Styles */
 body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  height: 100vh;
-  margin: 0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F9F6F0; /* Soft beige */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
-#sidebar {
-  background-color: #EED0C6;
-  width: 200px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
+/* Smooth animation for Welcome Page */
+#welcome-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
 }
 
+/* Fade In Animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Smart Bite Animation */
+#smart-bite {
+    font-size: 3em;
+    font-weight: bold;
+    color: #EED0C6; /* Main color */
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: slideIn 2s forwards 0.5s;
+}
+
+/* Smart Bite Slide In Animation */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Buttons */
 button {
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #EED0C6;
-  border: 1px solid #000;
-  cursor: pointer;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background-color: #EED0C6; /* Soft beige background */
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #D8B8A8;
+    background-color: #D1B3A1; /* Slightly darker shade */
 }
 
-.section {
-  display: none;
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
+/* Page Sections */
+section {
+    display: none;
+    width: 100%;
+    max-width: 1200px;
+    padding: 30px;
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-#proteinChart, #calorieChart {
-  width: 100%;
-  height: 300px;
+/* Profile Section */
+#profile-section {
+    text-align: center;
+    font-size: 1.2em;
 }
 
-input[type="number"], input[type="text"] {
-  padding: 5px;
-  margin: 10px;
+#profile-section input {
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid #EED0C6;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 80%;
 }
 
-#meal-list {
-  list-style-type: none;
-  padding: 0;
+#profile-section button {
+    width: 50%;
 }
 
-#meal-list img {
-  max-width: 100px;
-  margin-right: 10px;
+/* BMI Calculator Section */
+#bmi-calculator {
+    text-align: center;
+}
+
+#bmi-calculator input {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #EED0C6;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 60%;
+}
+
+#bmi-calculator button {
+    margin-top: 10px;
+    background-color: #EED0C6;
+}
+
+#bmi-calculator p {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Meal Log Section */
+#meal-log {
+    text-align: center;
+}
+
+#meal-log input {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #EED0C6;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 80%;
+}
+
+#meal-log button {
+    margin-top: 10px;
+    background-color: #EED0C6;
+}
+
+/* Protein and Calorie Tracker */
+#protein-tracker, #calorie-tracker {
+    text-align: center;
+}
+
+#protein-tracker, #calorie-tracker {
+    font-size: 1.2em;
+}
+
+#protein-tracker canvas, #calorie-tracker canvas {
+    margin-top: 30px;
+    width: 80%;
+    height: 400px;
+}
+
+#protein-tracker button, #calorie-tracker button {
+    margin-top: 20px;
+    background-color: #EED0C6;
+}
+
+/* Footer */
+footer {
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.9em;
+    color: #888;
 }
