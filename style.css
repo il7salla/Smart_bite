@@ -1,177 +1,67 @@
-/* Global Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #F9F6F0; /* Soft beige */
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+// Open the sidebar
+function openNav() {
+    document.getElementById("sidebar").style.left = "0";
+    document.getElementById("content").style.marginLeft = "250px"; // Adjust for sidebar width
 }
 
-/* Smooth animation for Welcome Page */
-#welcome-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    opacity: 0;
-    animation: fadeIn 2s forwards;
+// Close the sidebar
+function closeNav() {
+    document.getElementById("sidebar").style.left = "-250px";
+    document.getElementById("content").style.marginLeft = "0";
 }
 
-/* Fade In Animation */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
+// Show specific sections on button click
+function showSection(sectionId) {
+    // Hide all sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section) => {
+        section.classList.remove('active');
+    });
+
+    // Show the clicked section
+    const section = document.getElementById(sectionId);
+    section.classList.add('active');
+}
+
+// BMI Calculation
+function calculateBMI() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value) / 100; // Convert cm to meters
+
+    if (!weight || !height) {
+        alert("Please enter valid weight and height!");
+        return;
     }
-    100% {
-        opacity: 1;
-    }
-}
 
-/* Smart Bite Animation */
-#smart-bite {
-    font-size: 3em;
-    font-weight: bold;
-    color: #EED0C6; /* Main color */
-    letter-spacing: 2px;
-    opacity: 0;
-    animation: slideIn 2s forwards 0.5s;
-}
+    const bmi = (weight / (height * height)).toFixed(2);
+    const result = document.getElementById('bmi-result');
+    result.textContent = `Your BMI is ${bmi}.`;
 
-/* Smart Bite Slide In Animation */
-@keyframes slideIn {
-    0% {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
+    if (bmi < 18.5) {
+        result.innerHTML += " You are underweight.";
+    } else if (bmi >= 18.5 && bmi < 24.9) {
+        result.innerHTML += " You are normal weight.";
+    } else if (bmi >= 25 && bmi < 29.9) {
+        result.innerHTML += " You are overweight.";
+    } else {
+        result.innerHTML += " You are obese.";
     }
 }
 
-/* Buttons */
-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    background-color: #EED0C6; /* Soft beige background */
-    color: #fff;
-    font-size: 1.1em;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
+// Save Profile Information
+function saveProfile() {
+    const name = document.getElementById('profile-name').value;
+    const weight = document.getElementById('profile-weight').value;
+    const height = document.getElementById('profile-height').value;
 
-button:hover {
-    background-color: #D1B3A1; /* Slightly darker shade */
-}
+    if (!name || !weight || !height) {
+        alert("Please fill in all fields!");
+        return;
+    }
 
-/* Page Sections */
-section {
-    display: none;
-    width: 100%;
-    max-width: 1200px;
-    padding: 30px;
-    margin-top: 30px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+    const profileInfo = `Name: ${name}, Weight: ${weight}kg, Height: ${height}cm`;
+    document.getElementById('profile-info').innerText = profileInfo;
 
-/* Profile Section */
-#profile-section {
-    text-align: center;
-    font-size: 1.2em;
-}
-
-#profile-section input {
-    padding: 10px;
-    margin: 10px;
-    border: 2px solid #EED0C6;
-    border-radius: 8px;
-    font-size: 1em;
-    width: 80%;
-}
-
-#profile-section button {
-    width: 50%;
-}
-
-/* BMI Calculator Section */
-#bmi-calculator {
-    text-align: center;
-}
-
-#bmi-calculator input {
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #EED0C6;
-    border-radius: 8px;
-    font-size: 1em;
-    width: 60%;
-}
-
-#bmi-calculator button {
-    margin-top: 10px;
-    background-color: #EED0C6;
-}
-
-#bmi-calculator p {
-    margin-top: 20px;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Meal Log Section */
-#meal-log {
-    text-align: center;
-}
-
-#meal-log input {
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #EED0C6;
-    border-radius: 8px;
-    font-size: 1em;
-    width: 80%;
-}
-
-#meal-log button {
-    margin-top: 10px;
-    background-color: #EED0C6;
-}
-
-/* Protein and Calorie Tracker */
-#protein-tracker, #calorie-tracker {
-    text-align: center;
-}
-
-#protein-tracker, #calorie-tracker {
-    font-size: 1.2em;
-}
-
-#protein-tracker canvas, #calorie-tracker canvas {
-    margin-top: 30px;
-    width: 80%;
-    height: 400px;
-}
-
-#protein-tracker button, #calorie-tracker button {
-    margin-top: 20px;
-    background-color: #EED0C6;
-}
-
-/* Footer */
-footer {
-    position: absolute;
-    bottom: 10px;
-    font-size: 0.9em;
-    color: #888;
+    // Save data to localStorage
+    localStorage.setItem('profile', JSON.stringify({ name, weight, height }));
 }
