@@ -12,57 +12,68 @@ function closeNav() {
 
 // Show specific sections on button click
 function showSection(sectionId) {
-    // Hide all sections
     const sections = document.querySelectorAll('section');
     sections.forEach((section) => {
         section.classList.remove('active');
     });
-
-    // Show the clicked section
     const section = document.getElementById(sectionId);
     section.classList.add('active');
 }
 
-// Food data (protein and calories per 100g for each food item)
-const foodData = {
-    chicken: { protein: 31, calories: 165 },
-    rice: { protein: 2.7, calories: 130 },
-    eggs: { protein: 13, calories: 155 },
-    tofu: { protein: 8, calories: 76 },
-    cheese: { protein: 25, calories: 402 },
-    milk: { protein: 3.4, calories: 42 },
-    beef: { protein: 26, calories: 250 },
-    fish: { protein: 20, calories: 120 },
-    lentils: { protein: 9, calories: 116 },
-    yogurt: { protein: 10, calories: 59 },
-    almonds: { protein: 21, calories: 579 },
-    peanuts: { protein: 25, calories: 567 },
-    chickpeas: { protein: 8.9, calories: 164 },
-    burger: { protein: 25, calories: 250 },
-    pizza: { protein: 11, calories: 285 },
-    hotdog: { protein: 12, calories: 150 },
-    friedChicken: { protein: 20, calories: 400 },
-    bacon: { protein: 12, calories: 500 },
-    sausage: { protein: 12, calories: 200 },
-    iceCream: { protein: 4, calories: 207 },
-    chocolate: { protein: 7.6, calories: 546 },
-    cheetos: { protein: 6, calories: 150 },
-    doritos: { protein: 5, calories: 140 },
-    pringles: { protein: 5, calories: 150 },
-    fries: { protein: 3.4, calories: 312 },
-    naan: { protein: 6.2, calories: 289 },
-    samosa: { protein: 4, calories: 140 },
-    falafel: { protein: 13, calories: 200 },
-    hummus: { protein: 8, calories: 160 },
-    curry: { protein: 10, calories: 230 },
-    sushi: { protein: 14, calories: 200 },
-    dumplings: { protein: 11, calories: 150 },
-    pasta: { protein: 5, calories: 130 },
-    tortilla: { protein: 6, calories: 150 },
-    instantNoodles: { protein: 5, calories: 320 },
-    ramen: { protein: 10, calories: 400 },
-    spaghetti: { protein: 7, calories: 130 },
-    macAndCheese: { protein: 10, calories: 350 },
-    coke: { protein: 0, calories: 140 },
-    orangeJuice: { protein: 1, calories: 45 },
-    milkshake: { protein: 7, calories: 250 },
+// Save Profile data
+function saveProfile() {
+    const name = document.getElementById('profile-name').value;
+    const weight = document.getElementById('profile-weight').value;
+    const height = document.getElementById('profile-height').value;
+    alert(`Profile Saved: Name: ${name}, Weight: ${weight}kg, Height: ${height}cm`);
+}
+
+// Calculate BMI
+function calculateBMI() {
+    const weight = document.getElementById('weight').value;
+    const height = document.getElementById('height').value;
+    if (weight && height) {
+        const bmi = (weight / ((height / 100) ** 2)).toFixed(1);
+        document.getElementById('bmi-result').textContent = `Your BMI: ${bmi}`;
+    } else {
+        alert('Please enter both weight and height.');
+    }
+}
+
+// Add protein tracker
+function addProteinTracker() {
+    const food = document.getElementById('food-select').value;
+    const quantity = document.getElementById('quantity').value;
+    if (food && quantity) {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${food} - ${quantity} grams`;
+        document.getElementById('protein-log').appendChild(listItem);
+    } else {
+        alert('Please select a food and enter a quantity.');
+    }
+}
+
+// Add calorie tracker
+function addCalorieTracker() {
+    const food = document.getElementById('food-select-calorie').value;
+    const quantity = document.getElementById('quantity-calorie').value;
+    if (food && quantity) {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${food} - ${quantity} grams`;
+        document.getElementById('calorie-log').appendChild(listItem);
+    } else {
+        alert('Please select a food and enter a quantity.');
+    }
+}
+
+// Log meal photo
+function logMeal() {
+    const photo = document.getElementById('meal-photo').files[0];
+    if (photo) {
+        const listItem = document.createElement('li');
+        listItem.textContent = `Meal: ${photo.name}`;
+        document.getElementById('meal-list').appendChild(listItem);
+    } else {
+        alert('Please upload a photo.');
+    }
+}
