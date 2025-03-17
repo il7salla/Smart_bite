@@ -1,57 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Bite</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Bite</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <img src="images/logo.jpeg" alt="Smart Bite Logo" class="logo">
-            <h1>Smart Bite</h1>
-            <p>FUEL YOUR BODY WITH US</p>
-        </header>
 
-        <div class="sidebar">
-            <button onclick="calculateBMI()">BMI Calculator</button>
-            <button onclick="trackProtein()">Protein Tracker</button>
-            <button onclick="logMeal()">Meal Log</button>
-            <button onclick="showProfile()">Profile</button>
-        </div>
+  <div id="sidebar">
+    <button id="bmi-btn">BMI Calculator</button>
+    <button id="protein-btn">Protein Tracker</button>
+    <button id="calories-btn">Calorie Tracker</button>
+    <button id="meal-log-btn">Meal Log</button>
+    <button id="profile-btn">Profile</button>
+  </div>
 
-        <div class="content">
-            <h2>Welcome to Smart Bite!</h2>
-            <p>Track your health, monitor your progress, and fuel your body the right way.</p>
+  <div id="bmi-calculator" class="section">
+    <h2>BMI Calculator</h2>
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight" placeholder="Enter weight"><br>
+    <label for="height">Height (cm):</label>
+    <input type="number" id="height" placeholder="Enter height"><br>
+    <button onclick="calculateBMI()">Calculate BMI</button>
+    <p id="bmi-result"></p>
+  </div>
 
-            <div id="mealLogSection" class="hidden">
-                <h3>Meal Log</h3>
-                <input type="text" id="mealInput" placeholder="Enter your meal">
-                <button onclick="addMeal()">Add Meal</button>
-                
-                <div class="camera-section">
-                    <video id="camera" autoplay></video>
-                    <button onclick="captureMeal()">Capture Food</button>
-                    <canvas id="canvas" class="hidden"></canvas>
-                </div>
-
-                <ul id="mealList"></ul>
-            </div>
-
-            <div id="profileSection" class="hidden">
-                <h3>User Profile</h3>
-                <label>Name: <input type="text" id="userName"></label><br>
-                <label>Age: <input type="number" id="userAge"></label><br>
-                <label>Weight (kg): <input type="number" id="userWeight"></label><br>
-                <label>Height (m): <input type="number" id="userHeight"></label><br>
-                <label>Dietary Goals: <input type="text" id="userGoals"></label><br>
-                <button onclick="saveProfile()">Save Profile</button>
-                <p id="profileDetails"></p>
-            </div>
-        </div>
+  <div id="protein-tracker" class="section">
+    <h2>Protein Tracker</h2>
+    <canvas id="proteinChart"></canvas>
+    <div>
+      <input type="text" id="food-name" placeholder="Food name (e.g., Chicken)">
+      <input type="number" id="protein-amount" placeholder="Protein (g)">
+      <input type="number" id="calories-amount" placeholder="Calories">
+      <input type="number" id="quantity" placeholder="Quantity (servings)">
+      <button onclick="addProtein()">Add Protein</button>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <div id="calorie-tracker" class="section">
+    <h2>Calorie Tracker</h2>
+    <canvas id="calorieChart"></canvas>
+    <div>
+      <input type="text" id="food-name-calories" placeholder="Food name (e.g., Chicken)">
+      <input type="number" id="calories-value" placeholder="Calories">
+      <input type="number" id="quantity-calories" placeholder="Quantity (servings)">
+      <button onclick="addCalories()">Add Calories</button>
+    </div>
+  </div>
+
+  <div id="meal-log" class="section">
+    <h2>Meal Log</h2>
+    <input type="file" id="meal-photo" accept="image/*">
+    <button onclick="logMeal()">Log Meal</button>
+    <ul id="meal-list"></ul>
+  </div>
+
+  <div id="profile" class="section">
+    <h2>Profile</h2>
+    <label for="profile-name">Name:</label>
+    <input type="text" id="profile-name" placeholder="Enter your name"><br>
+    <label for="profile-weight">Weight (kg):</label>
+    <input type="number" id="profile-weight" placeholder="Enter your weight"><br>
+    <label for="profile-height">Height (cm):</label>
+    <input type="number" id="profile-height" placeholder="Enter your height"><br>
+    <button onclick="saveProfile()">Save Profile</button>
+    <p id="profile-info"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
