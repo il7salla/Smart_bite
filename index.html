@@ -18,11 +18,37 @@
             <button onclick="calculateBMI()">BMI Calculator</button>
             <button onclick="trackProtein()">Protein Tracker</button>
             <button onclick="logMeal()">Meal Log</button>
+            <button onclick="showProfile()">Profile</button>
         </div>
 
         <div class="content">
             <h2>Welcome to Smart Bite!</h2>
             <p>Track your health, monitor your progress, and fuel your body the right way.</p>
+
+            <div id="mealLogSection" class="hidden">
+                <h3>Meal Log</h3>
+                <input type="text" id="mealInput" placeholder="Enter your meal">
+                <button onclick="addMeal()">Add Meal</button>
+                
+                <div class="camera-section">
+                    <video id="camera" autoplay></video>
+                    <button onclick="captureMeal()">Capture Food</button>
+                    <canvas id="canvas" class="hidden"></canvas>
+                </div>
+
+                <ul id="mealList"></ul>
+            </div>
+
+            <div id="profileSection" class="hidden">
+                <h3>User Profile</h3>
+                <label>Name: <input type="text" id="userName"></label><br>
+                <label>Age: <input type="number" id="userAge"></label><br>
+                <label>Weight (kg): <input type="number" id="userWeight"></label><br>
+                <label>Height (m): <input type="number" id="userHeight"></label><br>
+                <label>Dietary Goals: <input type="text" id="userGoals"></label><br>
+                <button onclick="saveProfile()">Save Profile</button>
+                <p id="profileDetails"></p>
+            </div>
         </div>
     </div>
 
