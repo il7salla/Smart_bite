@@ -41,12 +41,21 @@
         <section id="protein-tracker">
             <h2>Protein Tracker</h2>
             <div id="protein-form">
-                <label for="food-select">Select Food:</label>
-                <select id="food-select">
-                    <!-- Dynamically populated food options -->
+                <label for="food-select">Select or Input Food:</label>
+                <select id="food-select" onchange="handleFoodSelect('protein')">
+                    <option value="">Select Food</option>
+                    <option value="Chicken">Chicken</option>
+                    <option value="Rice">Rice</option>
+                    <option value="Eggs">Eggs</option>
+                    <option value="Tofu">Tofu</option>
+                    <option value="Beef">Beef</option>
+                    <option value="Fish">Fish</option>
                 </select>
-                <label for="quantity">Enter Quantity (grams):</label>
-                <input type="number" id="quantity" placeholder="Enter Quantity in grams">
+                <br>
+                <input type="text" id="food-input" placeholder="Or type new food" style="display:none;">
+                <br>
+                <label for="protein-quantity">Enter Quantity (grams):</label>
+                <input type="number" id="protein-quantity" placeholder="Enter Quantity in grams">
                 <button class="tracker-btn" onclick="addProteinTracker()">Add to Tracker</button>
             </div>
             <ul id="protein-log"></ul>
@@ -55,12 +64,20 @@
         <section id="calorie-tracker">
             <h2>Calorie Tracker</h2>
             <div id="calorie-form">
-                <label for="food-select-calorie">Select Food:</label>
-                <select id="food-select-calorie">
-                    <!-- Dynamically populated food options -->
+                <label for="food-select-calorie">Select or Input Food:</label>
+                <select id="food-select-calorie" onchange="handleFoodSelect('calorie')">
+                    <option value="">Select Food</option>
+                    <option value="Burger">Burger</option>
+                    <option value="Pizza">Pizza</option>
+                    <option value="Ice Cream">Ice Cream</option>
+                    <option value="Fries">Fries</option>
+                    <option value="Soda">Soda</option>
                 </select>
-                <label for="quantity-calorie">Enter Quantity (grams):</label>
-                <input type="number" id="quantity-calorie" placeholder="Enter Quantity in grams">
+                <br>
+                <input type="text" id="food-input-calorie" placeholder="Or type new food" style="display:none;">
+                <br>
+                <label for="calorie-quantity">Enter Quantity (grams):</label>
+                <input type="number" id="calorie-quantity" placeholder="Enter Quantity in grams">
                 <button class="tracker-btn" onclick="addCalorieTracker()">Add to Tracker</button>
             </div>
             <ul id="calorie-log"></ul>
