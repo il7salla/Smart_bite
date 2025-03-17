@@ -1,139 +1,68 @@
-/* Global Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #F9F6F0; /* Soft beige */
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+// Open the sidebar
+function openNav() {
+    document.getElementById("sidebar").style.left = "0";
+    document.getElementById("content").style.marginLeft = "250px"; // Adjust for sidebar width
 }
 
-/* Sidebar Styling */
-#sidebar {
-    width: 250px;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: -250px;
-    background-color: #EED0C6;
-    transition: 0.3s;
-    padding-top: 50px;
-    z-index: 2;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+// Close the sidebar
+function closeNav() {
+    document.getElementById("sidebar").style.left = "-250px";
+    document.getElementById("content").style.marginLeft = "0";
 }
 
-#sidebar a {
-    padding: 16px;
-    text-decoration: none;
-    font-size: 1.2em;
-    color: #333;
-    display: block;
-    transition: 0.3s;
+// Show specific sections on button click
+function showSection(sectionId) {
+    // Hide all sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section) => {
+        section.classList.remove('active');
+    });
+
+    // Show the clicked section
+    const section = document.getElementById(sectionId);
+    section.classList.add('active');
 }
 
-#sidebar a:hover {
-    background-color: #D1B3A1;
-    color: white;
-}
-
-#sidebar .close-btn {
-    font-size: 30px;
-    color: #333;
-    cursor: pointer;
-    padding: 20px;
-}
-
-/* Button Animation */
-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    background-color: #EED0C6;
-    color: #fff;
-    font-size: 1.1em;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #D1B3A1;
-    transform: scale(1.1); /* Button click animation */
-}
-
-/* Main Content */
-#content {
-    margin-left: 0;
-    transition: margin-left 0.3s;
-    padding: 20px;
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-/* Section Styles */
-section {
-    display: none;
-    margin-top: 20px;
-    padding: 30px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-section.active {
-    display: block;
-}
-
-/* Profile Section */
-#profile-section input {
-    padding: 10px;
-    margin: 10px;
-    border: 2px solid #EED0C6;
-    border-radius: 8px;
-    font-size: 1em;
-    width: 80%;
-}
-
-#profile-section button {
-    width: 50%;
-}
-
-/* BMI Calculator Section */
-#bmi-calculator input {
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #EED0C6;
-    border-radius: 8px;
-    font-size: 1em;
-    width: 60%;
-}
-
-#bmi-calculator button {
-    margin-top: 10px;
-    background-color: #EED0C6;
-}
-
-/* Meal Log Section */
-#meal-log input {
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #EED0C6;
-    border-radius: 8px;
-    font-size: 1em;
-    width: 80%;
-}
-
-#meal-log button {
-    margin-top: 10px;
-    background-color: #EED0C6;
-}
-
-/* Footer */
-footer {
-    position: absolute;
-    bottom: 10px;
-    font-size: 0.9em;
-    color: #888;
-}
+// Food data (protein and calories per 100g for each food item)
+const foodData = {
+    chicken: { protein: 31, calories: 165 },
+    rice: { protein: 2.7, calories: 130 },
+    eggs: { protein: 13, calories: 155 },
+    tofu: { protein: 8, calories: 76 },
+    cheese: { protein: 25, calories: 402 },
+    milk: { protein: 3.4, calories: 42 },
+    beef: { protein: 26, calories: 250 },
+    fish: { protein: 20, calories: 120 },
+    lentils: { protein: 9, calories: 116 },
+    yogurt: { protein: 10, calories: 59 },
+    almonds: { protein: 21, calories: 579 },
+    peanuts: { protein: 25, calories: 567 },
+    chickpeas: { protein: 8.9, calories: 164 },
+    burger: { protein: 25, calories: 250 },
+    pizza: { protein: 11, calories: 285 },
+    hotdog: { protein: 12, calories: 150 },
+    friedChicken: { protein: 20, calories: 400 },
+    bacon: { protein: 12, calories: 500 },
+    sausage: { protein: 12, calories: 200 },
+    iceCream: { protein: 4, calories: 207 },
+    chocolate: { protein: 7.6, calories: 546 },
+    cheetos: { protein: 6, calories: 150 },
+    doritos: { protein: 5, calories: 140 },
+    pringles: { protein: 5, calories: 150 },
+    fries: { protein: 3.4, calories: 312 },
+    naan: { protein: 6.2, calories: 289 },
+    samosa: { protein: 4, calories: 140 },
+    falafel: { protein: 13, calories: 200 },
+    hummus: { protein: 8, calories: 160 },
+    curry: { protein: 10, calories: 230 },
+    sushi: { protein: 14, calories: 200 },
+    dumplings: { protein: 11, calories: 150 },
+    pasta: { protein: 5, calories: 130 },
+    tortilla: { protein: 6, calories: 150 },
+    instantNoodles: { protein: 5, calories: 320 },
+    ramen: { protein: 10, calories: 400 },
+    spaghetti: { protein: 7, calories: 130 },
+    macAndCheese: { protein: 10, calories: 350 },
+    coke: { protein: 0, calories: 140 },
+    orangeJuice: { protein: 1, calories: 45 },
+    milkshake: { protein: 7, calories: 250 },
