@@ -64,3 +64,12 @@ function addFood() {
 
   document.getElementById("proteinFeedback").innerText = proteinFeedback;
 }
+
+// New Features
+function trackProtein() {
+    alert("Protein Tracker is already integrated with the food log system.");
+}
+
+function logMeal() {
+    alert("Meal Log feature coming soon!");
+}
