@@ -1,214 +1,217 @@
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("Smart Bite app initialized!");
-    loadUserProfile();
-    loadProteinData();
-    loadMealHistory();
-    loadCalorieData();
-    initProteinChart();
+let currentView = "bmi-calculator";
 
-    // Button Click Listener (for testing purposes)
-    document.getElementById("submitButton").addEventListener("click", function() {
-        alert("Button clicked!");
-    });
-});
-
-// Section Navigation
-function showSection(sectionId) {
-    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-    document.getElementById(sectionId).classList.add('active');
-}
-
-// User Profile Management
-function saveUserProfile() {
-    const profile = {
-        name: document.getElementById("userName").value,
-        age: document.getElementById("userAge").value,
-        weight: document.getElementById("userWeight").value,
-        height: document.getElementById("userHeight").value,
-        goals: document.getElementById("dietaryGoals").value
-    };
-    localStorage.setItem("userProfile", JSON.stringify(profile));
-    document.getElementById("profileSavedMsg").innerText = "Profile Saved!";
-}
-
-function loadUserProfile() {
-    const profile = JSON.parse(localStorage.getItem("userProfile"));
-    if (profile) {
-        document.getElementById("userName").value = profile.name;
-        document.getElementById("userAge").value = profile.age;
-        document.getElementById("userWeight").value = profile.weight;
-        document.getElementById("userHeight").value = profile.height;
-        document.getElementById("dietaryGoals").value = profile.goals;
-    }
-}
-
-// BMI Calculator Function
-function calculateBMI() {
-    let weight = parseFloat(document.getElementById("weight").value);
-    let height = parseFloat(document.getElementById("height").value);
-
-    if (isNaN(weight) || isNaN(height) || height <= 0) {
-        document.getElementById("bmiResult").innerText = "Please enter valid numbers!";
-        return;
-    }
-
-    let bmi = weight / (height ** 2);
-    let category = bmi < 18.5 ? "Underweight" : bmi < 24.9 ? "Normal weight" : "Overweight";
-    document.getElementById("bmiResult").innerText = `Your BMI is ${bmi.toFixed(2)} (${category})`;
-}
-
-// Protein Tracker
-let totalProtein = parseFloat(localStorage.getItem("totalProtein")) || 0;
-let foodList = JSON.parse(localStorage.getItem("foodList")) || [];
-let proteinChart;
-
-const proteinChartData = {
-    'chicken': 25, 'rice': 2.5, 'eggs': 6, 'tofu': 10, 'cheese': 7, 'milk': 3.4, 
-    'beef': 26, 'fish': 20, 'lentils': 9, 'yogurt': 5, 'almonds': 21, 'peanuts': 26, 
-    'chickpeas': 19, 'burger': 12, 'pizza': 11, 'hot dog': 8, 'fried chicken': 18, 
-    'bacon': 37, 'sausage': 14, 'ice cream': 3, 'chocolate': 5, 'cheetos': 6, 
-    'doritos': 5, 'pringles': 4, 'fries': 3
+// Food data for protein and calorie tracking
+let proteinData = {
+  labels: [
+    "Chicken", "Rice", "Eggs", "Tofu", "Cheese", "Milk", "Beef", "Fish", "Lentils", "Yogurt",
+    "Almond", "Peanuts", "Chickpeas", "Burger", "Pizza", "Hotdog", "Fried Chicken", "Bacon",
+    "Sausage", "Ice Cream", "Chocolate", "Cheetos", "Doritos", "Pringles", "Fries", "Naan",
+    "Samosa", "Falafel", "Hummus", "Curry", "Sushi", "Dumplings", "Pasta", "Tortilla", 
+    "Instant Noodles", "Ramen", "Spaghetti", "Mac and Cheese", "Coke", "Orange Juice", 
+    "Milkshake", "Protein Shake", "Energy Drink", "Shawarma", "Kebab", "Biryani", "Miso Soup", 
+    "Pad Thai", "Salad", "Quinoa", "Avocado Toast", "Granola", "Oatmeal", "Fruit Bowl", 
+    "Green Smoothie", "Matcha Latte", "Bubble Tea"
+  ],
+  datasets: [{
+    label: "Protein (g)",
+    data: [
+      25, 4, 6, 10, 7, 8, 20, 22, 9, 8, 6, 8, 9, 26, 12, 22, 21, 15, 15, 2, 2, 1, 1, 3, 
+      5, 10, 5, 7, 10, 8, 12, 5, 5, 10, 8, 0, 0, 8, 20, 15, 15, 13, 7, 6, 2, 10, 5, 10, 6
+    ],
+    backgroundColor: "rgba(255, 99, 132, 0.2)",
+    borderColor: "rgba(255, 99, 132, 1)",
+    borderWidth: 1
+  }]
 };
 
-function addFood() {
-    let food = document.getElementById("food").value.trim().toLowerCase();
-    let quantity = parseFloat(document.getElementById("quantity").value);
+let calorieData = {
+  labels: [
+    "Chicken", "Rice", "Eggs", "Tofu", "Cheese", "Milk", "Beef", "Fish", "Lentils", "Yogurt",
+    "Almond", "Peanuts", "Chickpeas", "Burger", "Pizza", "Hotdog", "Fried Chicken", "Bacon",
+    "Sausage", "Ice Cream", "Chocolate", "Cheetos", "Doritos", "Pringles", "Fries", "Naan",
+    "Samosa", "Falafel", "Hummus", "Curry", "Sushi", "Dumplings", "Pasta", "Tortilla", 
+    "Instant Noodles", "Ramen", "Spaghetti", "Mac and Cheese", "Coke", "Orange Juice", 
+    "Milkshake", "Protein Shake", "Energy Drink", "Shawarma", "Kebab", "Biryani", "Miso Soup", 
+    "Pad Thai", "Salad", "Quinoa", "Avocado Toast", "Granola", "Oatmeal", "Fruit Bowl", 
+    "Green Smoothie", "Matcha Latte", "Bubble Tea"
+  ],
+  datasets: [{
+    label: "Calories",
+    data: [
+      200, 130, 70, 100, 120, 150, 250, 180, 120, 90, 160, 180, 150, 350, 300, 250, 350, 400,
+      250, 200, 250, 160, 180, 170, 230, 200, 300, 250, 160, 180, 250, 350, 100, 120, 200, 230,
+      150, 100, 70, 160, 220, 150, 200, 270, 300, 300, 400, 120, 150, 100, 160, 200
+    ],
+    backgroundColor: "rgba(54, 162, 235, 0.2)",
+    borderColor: "rgba(54, 162, 235, 1)",
+    borderWidth: 1
+  }]
+};
 
-    if (!food || isNaN(quantity) || quantity <= 0) {
-        alert("Enter valid food and quantity.");
-        return;
+const bmiCalculator = document.getElementById("bmi-calculator");
+const proteinTracker = document.getElementById("protein-tracker");
+const calorieTracker = document.getElementById("calorie-tracker");
+const mealLog = document.getElementById("meal-log");
+const profileSection = document.getElementById("profile");
+const proteinChart = document.getElementById("proteinChart").getContext("2d");
+const calorieChart = document.getElementById("calorieChart").getContext("2d");
+
+let proteinChartInstance = new Chart(proteinChart, {
+  type: "bar",
+  data: proteinData,
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
     }
-
-    let protein = proteinChartData[food] ? proteinChartData[food] * quantity : 0;
-
-    // If food is not found in chart, prompt user
-    if (!proteinChartData[food]) {
-        protein = parseFloat(prompt(`Protein content for '${food}' is unknown. Enter protein per serving (in grams):`));
-        if (isNaN(protein)) {
-            alert("Invalid protein input.");
-            return;
-        }
-        protein *= quantity;
-    }
-
-    totalProtein += protein;
-
-    let entry = `${food} - ${protein}g protein at ${new Date().toLocaleTimeString()}`;
-    foodList.push(entry);
-    localStorage.setItem("totalProtein", totalProtein);
-    localStorage.setItem("foodList", JSON.stringify(foodList));
-
-    updateProteinUI();
-    updateProteinChart(protein);
-}
-
-function updateProteinUI() {
-    document.getElementById("totalProtein").innerText = `Total Protein: ${totalProtein}g`;
-    let foodListElement = document.getElementById("foodList");
-    foodListElement.innerHTML = "";
-    foodList.forEach(item => {
-        let li = document.createElement("li");
-        li.textContent = item;
-        foodListElement.appendChild(li);
-    });
-}
-
-function initProteinChart() {
-    const ctx = document.getElementById("proteinChart").getContext("2d");
-    proteinChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Daily Protein (g)',
-                data: [],
-                backgroundColor: 'rgba(75, 192, 192, 0.6)'
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    });
-}
-
-function updateProteinChart(protein) {
-    const today = new Date().toLocaleDateString();
-    const index = proteinChart.data.labels.indexOf(today);
-
-    if (index === -1) {
-        proteinChart.data.labels.push(today);
-        proteinChart.data.datasets[0].data.push(protein);
-    } else {
-        proteinChart.data.datasets[0].data[index] += protein;
-    }
-
-    proteinChart.update();
-}
-
-// Meal Log (Photo Uploads)
-let mealHistory = JSON.parse(localStorage.getItem("mealHistory")) || [];
-
-document.getElementById("photoUpload").addEventListener("change", function (e) {
-    const uploadedPhoto = URL.createObjectURL(e.target.files[0]);
-    document.getElementById("latestPhoto").src = uploadedPhoto;
-
-    let newEntry = {
-        time: new Date().toLocaleString(),
-        photo: uploadedPhoto
-    };
-
-    mealHistory.unshift(newEntry);
-    localStorage.setItem("mealHistory", JSON.stringify(mealHistory));
-
-    loadMealHistory();
+  }
 });
 
-function loadMealHistory() {
-    const historyContainer = document.getElementById("photoHistory");
-    historyContainer.innerHTML = "";
-    mealHistory.forEach(item => {
-        let div = document.createElement("div");
-        div.innerHTML = `<p>${item.time}</p><img src="${item.photo}" alt="Meal Photo">`;
-        historyContainer.appendChild(div);
-    });
-}
-
-// Calorie Tracker
-let totalCalories = parseFloat(localStorage.getItem("totalCalories")) || 0;
-let calorieList = JSON.parse(localStorage.getItem("calorieList")) || [];
-
-function addCalorie() {
-    let food = document.getElementById("calorieFood").value.trim();
-    let calories = parseFloat(document.getElementById("calories").value);
-
-    if (!food || isNaN(calories) || calories <= 0) {
-        alert("Enter valid food and calorie amount.");
-        return;
+let calorieChartInstance = new Chart(calorieChart, {
+  type: "bar",
+  data: calorieData,
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
     }
+  }
+});
 
-    totalCalories += calories;
-    let entry = `${food}: ${calories} kcal`;
-    calorieList.push(entry);
-    localStorage.setItem("totalCalories", totalCalories);
-    localStorage.setItem("calorieList", JSON.stringify(calorieList));
+// Show the section based on button clicked
+document.getElementById("bmi-btn").addEventListener("click", () => {
+  switchView("bmi-calculator");
+});
 
-    updateCalorieUI();
+document.getElementById("protein-btn").addEventListener("click", () => {
+  switchView("protein-tracker");
+});
+
+document.getElementById("calories-btn").addEventListener("click", () => {
+  switchView("calorie-tracker");
+});
+
+document.getElementById("meal-log-btn").addEventListener("click", () => {
+  switchView("meal-log");
+});
+
+document.getElementById("profile-btn").addEventListener("click", () => {
+  switchView("profile");
+});
+
+function switchView(view) {
+  document.getElementById(currentView).style.display = "none";
+  document.getElementById(view).style.display = "block";
+  currentView = view;
 }
 
-function updateCalorieUI() {
-    document.getElementById("totalCalories").innerText = `Total Calories: ${totalCalories} kcal`;
-    let calorieListElement = document.getElementById("calorieList");
-    calorieListElement.innerHTML = "";
-    calorieList.forEach(item => {
-        let li = document.createElement("li");
-        li.textContent = item;
-        calorieListElement.appendChild(li);
-    });
+function calculateBMI() {
+  let weight = parseFloat(document.getElementById("weight").value);
+  let height = parseFloat(document.getElementById("height").value) / 100; // Convert cm to m
+
+  if (isNaN(weight) || isNaN(height)) {
+    alert("Please enter valid values for weight and height.");
+    return;
+  }
+
+  let bmi = weight / (height * height);
+  let result = "";
+
+  if (bmi < 18.5) {
+    result = `Underweight (BMI: ${bmi.toFixed(2)})`;
+  } else if (bmi < 24.9) {
+    result = `Normal weight (BMI: ${bmi.toFixed(2)})`;
+  } else if (bmi < 29.9) {
+    result = `Overweight (BMI: ${bmi.toFixed(2)})`;
+  } else {
+    result = `Obesity (BMI: ${bmi.toFixed(2)})`;
+  }
+
+  document.getElementById("bmi-result").innerText = result;
 }
 
-function loadCalorieData() {
-    updateCalorieUI();
+function addProtein() {
+  let foodName = document.getElementById("food-name").value;
+  let proteinAmount = parseFloat(document.getElementById("protein-amount").value);
+  let caloriesAmount = parseFloat(document.getElementById("calories-amount").value);
+  let quantity = parseInt(document.getElementById("quantity").value);
+
+  if (!foodName || isNaN(proteinAmount) || isNaN(caloriesAmount) || isNaN(quantity)) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  // Add the food and its quantity to the chart data
+  proteinData.labels.push(foodName);
+  proteinData.datasets[0].data.push(proteinAmount * quantity);
+  calorieData.labels.push(foodName);
+  calorieData.datasets[0].data.push(caloriesAmount * quantity);
+
+  proteinChartInstance.update();
+  calorieChartInstance.update();
 }
+
+function addCalories() {
+  let foodName = document.getElementById("food-name-calories").value;
+  let caloriesValue = parseFloat(document.getElementById("calories-value").value);
+  let quantity = parseInt(document.getElementById("quantity-calories").value);
+
+  if (!foodName || isNaN(caloriesValue) || isNaN(quantity)) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  // Add the food and its quantity to the calorie data
+  calorieData.labels.push(foodName);
+  calorieData.datasets[0].data.push(caloriesValue * quantity);
+
+  calorieChartInstance.update();
+}
+
+function logMeal() {
+  let file = document.getElementById("meal-photo").files[0];
+  if (file) {
+    let reader = new FileReader();
+    reader.onload = function(event) {
+      let imgElement = document.createElement("img");
+      imgElement.src = event.target.result;
+
+      let li = document.createElement("li");
+      li.appendChild(imgElement);
+      document.getElementById("meal-list").appendChild(li);
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function saveProfile() {
+  let name = document.getElementById("profile-name").value;
+  let weight = document.getElementById("profile-weight").value;
+  let height = document.getElementById("profile-height").value;
+
+  if (!name || !weight || !height) {
+    alert("Please fill all profile fields.");
+    return;
+  }
+
+  // Save profile data to localStorage
+  localStorage.setItem("profile", JSON.stringify({ name, weight, height }));
+
+  document.getElementById("profile-info").innerText = `Name: ${name}, Weight: ${weight}kg, Height: ${height}cm`;
+}
+
+function loadProfile() {
+  const profile = JSON.parse(localStorage.getItem("profile"));
+  if (profile) {
+    document.getElementById("profile-name").value = profile.name;
+    document.getElementById("profile-weight").value = profile.weight;
+    document.getElementById("profile-height").value = profile.height;
+    document.getElementById("profile-info").innerText = `Name: ${profile.name}, Weight: ${profile.weight}kg, Height: ${profile.height}cm`;
+  }
+}
+
+window.onload = loadProfile;
