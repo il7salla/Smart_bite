@@ -5,67 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Bite</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div id="sidebar" class="sidebar">
-        <button id="toggleSidebar">☰</button>
-        <nav>
-            <button onclick="showSection('profile')">User Profile</button>
-            <button onclick="showSection('bmi')">BMI Calculator</button>
-            <button onclick="showSection('protein')">Protein Tracker</button>
-            <button onclick="showSection('mealLog')">Meal Log</button>
-            <button onclick="showSection('calorieTracker')">Calorie Tracker</button>
-        </nav>
+
+    <div class="sidebar">
+        <h2>Smart Bite</h2>
+        <button onclick="showSection('profileSection')">User Profile</button>
+        <button onclick="showSection('bmiSection')">BMI Calculator</button>
+        <button onclick="showSection('proteinSection')">Protein Tracker</button>
+        <button onclick="showSection('mealLogSection')">Meal Log</button>
+        <button onclick="showSection('calorieSection')">Calorie Tracker</button>
     </div>
 
-    <div class="content">
-        <div id="profile" class="section active">
+    <div class="main-content">
+
+        <!-- User Profile Section -->
+        <div id="profileSection" class="section active">
             <h2>User Profile</h2>
-            <input id="userName" placeholder="Name">
-            <input id="userAge" placeholder="Age">
-            <input id="userWeight" placeholder="Weight (kg)">
-            <input id="userHeight" placeholder="Height (m)">
-            <input id="dietaryGoals" placeholder="Dietary Goals">
+            <label>Name:</label><input type="text" id="userName">
+            <label>Age:</label><input type="number" id="userAge">
+            <label>Weight (kg):</label><input type="number" id="userWeight">
+            <label>Height (m):</label><input type="number" id="userHeight">
+            <label>Dietary Goals:</label><input type="text" id="dietaryGoals">
             <button onclick="saveUserProfile()">Save Profile</button>
             <p id="profileSavedMsg"></p>
         </div>
 
-        <div id="bmi" class="section">
+        <!-- BMI Calculator Section -->
+        <div id="bmiSection" class="section">
             <h2>BMI Calculator</h2>
-            <input id="weight" placeholder="Weight (kg)">
-            <input id="height" placeholder="Height (m)">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight">
+            <label for="height">Height (m):</label>
+            <input type="number" id="height">
             <button onclick="calculateBMI()">Calculate BMI</button>
             <p id="bmiResult"></p>
         </div>
 
-        <div id="protein" class="section">
+        <!-- Protein Tracker Section -->
+        <div id="proteinSection" class="section">
             <h2>Protein Tracker</h2>
-            <input id="food" placeholder="Food">
-            <input id="quantity" placeholder="Quantity (servings)">
+            <label for="food">Food:</label>
+            <input type="text" id="food">
+            <label for="quantity">Quantity (servings):</label>
+            <input type="number" id="quantity">
             <button onclick="addFood()">Add Food</button>
-            <p id="totalProtein">Total Protein: 0g</p>
-            <ul id="foodList"></ul>
+            <h3 id="totalProtein">Total Protein: 0g</h3>
             <canvas id="proteinChart"></canvas>
+            <ul id="foodList"></ul>
+            <p id="proteinFeedback"></p>
         </div>
 
-        <div id="mealLog" class="section">
+        <!-- Meal Log Section -->
+        <div id="mealLogSection" class="section">
             <h2>Meal Log</h2>
-            <input type="file" id="photoUpload">
-            <img id="latestPhoto" alt="Latest Meal">
+            <input type="file" id="photoUpload" accept="image/*">
+            <h3>Latest Upload:</h3>
+            <img id="latestPhoto" alt="Latest Upload">
+            <h3>Meal History:</h3>
             <div id="photoHistory"></div>
         </div>
 
-        <div id="calorieTracker" class="section">
+        <!-- Calorie Tracker Section -->
+        <div id="calorieSection" class="section">
             <h2>Calorie Tracker</h2>
-            <input id="calorieFood" placeholder="Food">
-            <input id="calories" placeholder="Calories">
+            <label for="calorieFood">Food:</label>
+            <input type="text" id="calorieFood">
+            <label for="calories">Calories:</label>
+            <input type="number" id="calories">
             <button onclick="addCalorie()">Add Calories</button>
-            <p id="totalCalories">Total Calories: 0 kcal</p>
+            <h3 id="totalCalories">Total Calories: 0 kcal</h3>
             <ul id="calorieList"></ul>
         </div>
+
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
