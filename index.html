@@ -7,55 +7,65 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="welcome-page">
-        <h1>Welcome to <span>Smart Bite</span></h1>
-        <p>Your smart guide to healthy eating!</p>
-        <button id="start-btn">Get Started</button>
-    </div>
-
-    <div class="sidebar">
-        <div class="hamburger" onclick="toggleSidebar()">☰</div>
+    <div id="sidebar" class="sidebar">
+        <button id="toggleSidebar">☰</button>
         <nav>
-            <button onclick="showPage('profile')">Profile</button>
-            <button onclick="showPage('bmi-calculator')">BMI Calculator</button>
-            <button onclick="showPage('protein-tracker')">Protein Tracker</button>
-            <button onclick="showPage('calorie-tracker')">Calorie Tracker</button>
+            <button onclick="showSection('profile')">User Profile</button>
+            <button onclick="showSection('bmi')">BMI Calculator</button>
+            <button onclick="showSection('protein')">Protein Tracker</button>
+            <button onclick="showSection('mealLog')">Meal Log</button>
+            <button onclick="showSection('calorieTracker')">Calorie Tracker</button>
         </nav>
     </div>
 
-    <div id="content">
-        <section id="profile">
+    <div class="content">
+        <div id="profile" class="section active">
             <h2>User Profile</h2>
-            <input type="text" id="name" placeholder="Enter your name">
-            <input type="number" id="weight" placeholder="Enter your weight (kg)">
-            <input type="number" id="height" placeholder="Enter your height (cm)">
-            <button onclick="saveProfile()">Save Profile</button>
-        </section>
+            <input id="userName" placeholder="Name">
+            <input id="userAge" placeholder="Age">
+            <input id="userWeight" placeholder="Weight (kg)">
+            <input id="userHeight" placeholder="Height (m)">
+            <input id="dietaryGoals" placeholder="Dietary Goals">
+            <button onclick="saveUserProfile()">Save Profile</button>
+            <p id="profileSavedMsg"></p>
+        </div>
 
-        <section id="bmi-calculator">
+        <div id="bmi" class="section">
             <h2>BMI Calculator</h2>
+            <input id="weight" placeholder="Weight (kg)">
+            <input id="height" placeholder="Height (m)">
             <button onclick="calculateBMI()">Calculate BMI</button>
-            <p id="bmi-result"></p>
-        </section>
+            <p id="bmiResult"></p>
+        </div>
 
-        <section id="protein-tracker">
+        <div id="protein" class="section">
             <h2>Protein Tracker</h2>
-            <input type="text" id="food-input" placeholder="Enter food name">
-            <input type="number" id="protein-quantity" placeholder="Enter quantity (grams)">
-            <button onclick="addProteinTracker()">Add to Log</button>
-            <ul id="protein-log"></ul>
-        </section>
+            <input id="food" placeholder="Food">
+            <input id="quantity" placeholder="Quantity (servings)">
+            <button onclick="addFood()">Add Food</button>
+            <p id="totalProtein">Total Protein: 0g</p>
+            <ul id="foodList"></ul>
+            <canvas id="proteinChart"></canvas>
+        </div>
 
-        <section id="calorie-tracker">
+        <div id="mealLog" class="section">
+            <h2>Meal Log</h2>
+            <input type="file" id="photoUpload">
+            <img id="latestPhoto" alt="Latest Meal">
+            <div id="photoHistory"></div>
+        </div>
+
+        <div id="calorieTracker" class="section">
             <h2>Calorie Tracker</h2>
-            <input type="text" id="food-input-calorie" placeholder="Enter food name">
-            <input type="number" id="calorie-quantity" placeholder="Enter quantity (grams)">
-            <button onclick="addCalorieTracker()">Add to Log</button>
-            <ul id="calorie-log"></ul>
-        </section>
+            <input id="calorieFood" placeholder="Food">
+            <input id="calories" placeholder="Calories">
+            <button onclick="addCalorie()">Add Calories</button>
+            <p id="totalCalories">Total Calories: 0 kcal</p>
+            <ul id="calorieList"></ul>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
