@@ -1,54 +1,92 @@
-// Sidebar Toggle
-function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('open');
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Smart Bite app initialized!");
+    loadUserProfile();
+    loadProteinData();
+    loadMealHistory();
+    loadCalorieData();
+    initProteinChart();
+
+    // Sidebar Toggle
+    const sidebar = document.getElementById("sidebar");
+    const content = document.querySelector(".content");
+    const toggleSidebarBtn = document.getElementById("toggleSidebar");
+
+    toggleSidebarBtn.addEventListener("click", function () {
+        sidebar.classList.toggle("active");
+        content.classList.toggle("shifted");
+    });
+
+    // Swipe Detection
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    document.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].clientX;
+        if (touchStartX < touchEndX - 50) sidebar.classList.add("active");
+        if (touchStartX > touchEndX + 50) sidebar.classList.remove("active");
+    });
+});
+
+// Section Navigation
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
 }
 
-// Show Pages
-function showPage(pageId) {
-    const sections = document.querySelectorAll('#content section');
-    sections.forEach(section => section.style.display = 'none');
-    document.getElementById(pageId).style.display = 'block';
+// User Profile Management
+function saveUserProfile() {
+    const profile = {
+        name: document.getElementById("userName").value,
+        age: document.getElementById("userAge").value,
+        weight: document.getElementById("userWeight").value,
+        height: document.getElementById("userHeight").value,
+        goals: document.getElementById("dietaryGoals").value
+    };
+    localStorage.setItem("userProfile", JSON.stringify(profile));
+    document.getElementById("profileSavedMsg").innerText = "Profile Saved!";
 }
 
-// Profile Management
-function saveProfile() {
-    const name = document.getElementById('name').value;
-    const weight = document.getElementById('weight').value;
-    const height = document.getElementById('height').value;
-
-    localStorage.setItem('profile', JSON.stringify({ name, weight, height }));
-    alert('Profile saved!');
-}
-
-function loadProfile() {
-    const profile = JSON.parse(localStorage.getItem('profile'));
+function loadUserProfile() {
+    const profile = JSON.parse(localStorage.getItem("userProfile"));
     if (profile) {
-        document.getElementById('name').value = profile.name;
-        document.getElementById('weight').value = profile.weight;
-        document.getElementById('height').value = profile.height;
+        document.getElementById("userName").value = profile.name;
+        document.getElementById("userAge").value = profile.age;
+        document.getElementById("userWeight").value = profile.weight;
+        document.getElementById("userHeight").value = profile.height;
+        document.getElementById("dietaryGoals").value = profile.goals;
     }
 }
 
 // BMI Calculator
 function calculateBMI() {
-    const weight = parseFloat(document.getElementById('weight').value);
-    const height = parseFloat(document.getElementById('height').value) / 100;
+    let weight = parseFloat(document.getElementById("weight").value);
+    let height = parseFloat(document.getElementById("height").value);
 
-    if (!weight || !height) {
-        alert('Please fill in your profile first!');
+    if (isNaN(weight) || isNaN(height) || height <= 0) {
+        document.getElementById("bmiResult").innerText = "Please enter valid numbers!";
         return;
     }
 
-    const bmi = (weight / (height * height)).toFixed(2);
-    let result = `Your BMI is ${bmi}. `;
-
-    if (bmi < 18.5) result += "You are underweight.";
-    else if (bmi < 24.9) result += "You are normal weight.";
-    else if (bmi < 29.9) result += "You are overweight.";
-    else result += "You are obese.";
-
-    document.getElementById('bmi-result').textContent = result;
+    let bmi = weight / (height ** 2);
+    let category = bmi < 18.5 ? "Underweight" : bmi < 24.9 ? "Normal weight" : "Overweight";
+    document.getElementById("bmiResult").innerText = `Your BMI is ${bmi.toFixed(2)} (${category})`;
 }
 
-window.onload = loadProfile;
+// Protein Tracker
+let totalProtein = parseFloat(localStorage.getItem("totalProtein")) || 0;
+function addFood() {
+    let food = document.getElementById("food").value.trim().toLowerCase();
+    let quantity = parseFloat(document.getElementById("quantity").value);
+
+    if (!food || isNaN(quantity) || quantity <= 0) {
+        alert("Enter valid food and quantity.");
+        return;
+    }
+
+    totalProtein += quantity * 10;  // Example calculation
+    document.getElementById("totalProtein").innerText = `Total Protein: ${totalProtein}g`;
+}
